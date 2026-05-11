@@ -9,6 +9,14 @@ const STATUS_OPTIONS = [
   { value: 'mastered', label: '⭐ 習得' },
 ];
 
+const TYPE_OPTIONS = [
+  { value: '', label: '全て' },
+  { value: '単語', label: '単語' },
+  { value: '慣用句', label: '慣用句' },
+  { value: 'ことわざ', label: 'ことわざ' },
+  { value: '四字熟語', label: '四字熟語' },
+];
+
 const STATUS_COLOR = {
   new: 'bg-blue-100 text-blue-700',
   learning: 'bg-yellow-100 text-yellow-700',
@@ -19,6 +27,7 @@ const STATUS_COLOR = {
 export default function Wordbook() {
   const [words, setWords] = useState([]);
   const [statusFilter, setStatusFilter] = useState('');
+  const [typeFilter, setTypeFilter] = useState('');
   const [search, setSearch] = useState('');
   const navigate = useNavigate();
 
@@ -31,13 +40,11 @@ export default function Wordbook() {
       .catch(() => {});
   }, [statusFilter]);
 
-  const filtered = search
-    ? words.filter(w =>
-        w.word.includes(search) ||
-        w.reading?.includes(search) ||
-        w.meaning?.includes(search)
-      )
-    : words;
+  const filtered = words.filter(w => {
+    if (typeFilter && (w.type || '単語') !== typeFilter) return false;
+    if (search && !w.word.includes(search) && !w.reading?.includes(search) && !w.meaning?.includes(search)) return false;
+    return true;
+  });
 
   return (
     <div className="max-w-lg mx-auto px-4 pt-4 pb-24">
@@ -70,6 +77,20 @@ export default function Wordbook() {
             </button>
           ))}
         </div>
+        <div className="flex gap-2 overflow-x-auto pb-1 mt-1">
+          {TYPE_OPTIONS.map(opt => (
+            <button
+              key={opt.value}
+              onClick={() => setTypeFilter(opt.value)}
+              className={`text-xs px-3 py-1.5 rounded-full whitespace-nowrap transition
+                ${typeFilter === opt.value
+                  ? 'bg-purple-600 text-white'
+                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
+            >
+              {opt.label}
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* 単語リスト */}
@@ -85,11 +106,18 @@ export default function Wordbook() {
                          border border-gray-100 hover:border-blue-300 transition"
             >
               <div className="flex items-center justify-between">
-                <div>
-                  <span className="font-bold text-gray-800">{w.word}</span>
-                  {w.reading && (
-                    <span className="text-gray-500 text-sm ml-1">（{w.reading}）</span>
-                  )}
+                <div className="min-w-0">
+                  <div className="flex items-center gap-1">
+                    <span className="font-bold text-gray-800">{w.word}</span>
+                    {w.reading && (
+                      <span className="text-gray-500 text-sm">（{w.reading}）</span>
+                    )}
+                    {w.type && w.type !== '単語' && (
+                      <span className="text-xs px-1.5 py-0.5 rounded-full bg-purple-100 text-purple-700 shrink-0">
+                        {w.type}
+                      </span>
+                    )}
+                  </div>
                   <p className="text-xs text-gray-500 mt-0.5 line-clamp-1">{w.meaning}</p>
                 </div>
                 <span className={`text-xs px-2 py-0.5 rounded-full ml-2 shrink-0

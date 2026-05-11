@@ -60,6 +60,12 @@ export function initDb() {
     );
   `);
 
+  // 既存DBへのマイグレーション: type カラムがなければ追加
+  const cols = db.all(`PRAGMA table_info(words)`);
+  if (!cols.some(c => c.name === 'type')) {
+    db.exec(`ALTER TABLE words ADD COLUMN type TEXT DEFAULT '単語'`);
+  }
+
   // user_stats の初期レコードを1件だけ作る
   const existing = db.get('SELECT id FROM user_stats WHERE id = 1');
   if (!existing) {

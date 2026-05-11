@@ -13,13 +13,14 @@ export function saveWord(data) {
   const info = db.run(
     `INSERT INTO words
        (word, reading, meaning, example, usage_note, synonyms,
-        source_url, source_memo, tags)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        source_url, source_memo, tags, type)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     [
       data.word, data.reading || null, data.meaning,
       data.example || null, data.usage_note || null,
       data.synonyms || null, data.source_url || null,
       data.source_memo || null, data.tags || null,
+      data.type || '単語',
     ]
   );
   db.close();

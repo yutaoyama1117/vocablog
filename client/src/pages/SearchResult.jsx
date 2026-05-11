@@ -17,7 +17,7 @@ export default function SearchResult() {
     return null;
   }
 
-  const { word, reading, meaning, example, usage_note, synonyms } = state;
+  const { word, reading, meaning, example, usage_note, synonyms, type } = state;
 
   const handleSave = async () => {
     setSaving(true);
@@ -26,7 +26,7 @@ export default function SearchResult() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          word, reading, meaning, example, usage_note, synonyms,
+          word, reading, meaning, example, usage_note, synonyms, type,
           source_url: sourceUrl.trim() || null,
           source_memo: sourceMemo.trim() || null,
         }),
@@ -51,10 +51,17 @@ export default function SearchResult() {
 
       {/* 単語ヘッダー */}
       <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 mb-4">
-        <h1 className="text-2xl font-bold text-gray-800">
-          {word}
-          {reading && <span className="text-base font-normal text-gray-500 ml-2">（{reading}）</span>}
-        </h1>
+        <div className="flex items-start justify-between mb-1">
+          <h1 className="text-2xl font-bold text-gray-800">
+            {word}
+            {reading && <span className="text-base font-normal text-gray-500 ml-2">（{reading}）</span>}
+          </h1>
+          {type && (
+            <span className="text-xs px-2 py-1 rounded-full bg-purple-100 text-purple-700 font-medium ml-2 shrink-0">
+              {type}
+            </span>
+          )}
+        </div>
 
         <div className="mt-4 space-y-4">
           <Section icon="📖" title="意味" content={meaning} />

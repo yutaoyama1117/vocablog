@@ -53,9 +53,16 @@ export default function WordDetail() {
             {word.word}
             {word.reading && <span className="text-base font-normal text-gray-500 ml-2">（{word.reading}）</span>}
           </h1>
-          <span className={`text-xs px-2 py-1 rounded-full font-medium ${statusInfo.color}`}>
-            {statusInfo.label}
-          </span>
+          <div className="flex flex-col items-end gap-1 ml-2 shrink-0">
+            {word.type && word.type !== '単語' && (
+              <span className="text-xs px-2 py-1 rounded-full bg-purple-100 text-purple-700 font-medium">
+                {word.type}
+              </span>
+            )}
+            <span className={`text-xs px-2 py-1 rounded-full font-medium ${statusInfo.color}`}>
+              {statusInfo.label}
+            </span>
+          </div>
         </div>
 
         <div className="space-y-4">

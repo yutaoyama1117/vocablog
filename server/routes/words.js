@@ -29,7 +29,7 @@ router.get('/:id', (req, res) => {
 // 単語を保存
 router.post('/', async (req, res) => {
   const { word, reading, meaning, example, usage_note, synonyms,
-    source_url, source_memo, tags } = req.body;
+    source_url, source_memo, tags, type } = req.body;
 
   if (!word?.trim() || !meaning?.trim()) {
     return res.status(400).json({ error: 'word と meaning は必須です' });
@@ -37,7 +37,7 @@ router.post('/', async (req, res) => {
 
   try {
     const id = saveWord({ word, reading, meaning, example, usage_note,
-      synonyms, source_url, source_memo, tags });
+      synonyms, source_url, source_memo, tags, type });
 
     // XP計算: 基本20 + 文脈ボーナス10
     const hasContext = source_url?.trim() || source_memo?.trim();
