@@ -10,6 +10,9 @@
     "start": "node server/index.js",
     "build": "cd client && npm install && npm run build"
   },
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "dependencies": {
     "@google/generative-ai": "^0.21.0",
     "@slack/webhook": "^7.0.3",
