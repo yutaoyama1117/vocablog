@@ -47,7 +47,7 @@ export async function sendReminderNotification(word, daysSinceSaved) {
             `🔔 *復習リマインド*`,
             `「*${word.word}${reading_}*」を保存してから${daysSinceSaved}日が経ちました。`,
             `意味: ${word.meaning}`,
-            `→ アプリで確認: http://localhost:3000/word/${word.id}`,
+            `→ アプリで確認: https://vocablog-production.up.railway.app/word/${word.id}`,
           ].join('\n'),
         },
       },

@@ -49,7 +49,7 @@ router.post('/', async (req, res) => {
     const stats = getStats();
     const totalWords = getWords().length;
     sendSaveNotification({ word, reading, meaning, example,
-      source_url, totalWords, stats }).catch(() => {});
+      source_url, totalWords, stats }).catch(e => console.error('Slack通知エラー:', e.message));
 
     res.json({
       id, xpAdded, xpBonus,
