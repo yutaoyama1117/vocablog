@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import XPToast from '../components/XPToast';
+import { useStats } from '../context/StatsContext';
 
 export default function SearchResult() {
   const { state } = useLocation();
   const navigate = useNavigate();
+  const { refreshStats } = useStats();
   const [sourceUrl, setSourceUrl] = useState('');
   const [sourceMemo, setSourceMemo] = useState('');
   const [saving, setSaving] = useState(false);
@@ -31,6 +33,7 @@ export default function SearchResult() {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error);
+      refreshStats();
       setToast(data.message);
       setTimeout(() => navigate(`/word/${data.id}`), 2200);
     } catch (err) {

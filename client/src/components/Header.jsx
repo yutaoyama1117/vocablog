@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { useStats } from '../context/StatsContext';
 
 export default function Header() {
-  const [stats, setStats] = useState(null);
+  const { stats, refreshStats } = useStats();
 
   useEffect(() => {
-    fetch('/api/stats').then(r => r.json()).then(setStats).catch(() => {});
+    refreshStats();
   }, []);
 
   if (!stats) return <div className="h-14 bg-blue-600" />;

@@ -1,10 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
+import { useStats } from '../context/StatsContext';
 
 export default function Dashboard() {
-  const [stats, setStats] = useState(null);
+  const { stats, refreshStats } = useStats();
 
   useEffect(() => {
-    fetch('/api/stats').then(r => r.json()).then(setStats).catch(() => {});
+    refreshStats();
   }, []);
 
   if (!stats) return <div className="text-center pt-20 text-gray-400">読み込み中...</div>;

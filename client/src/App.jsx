@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { StatsProvider } from './context/StatsContext';
 import Header from './components/Header';
 import BottomNav from './components/BottomNav';
 import Home from './pages/Home';
@@ -10,6 +11,7 @@ import Dashboard from './pages/Dashboard';
 export default function App() {
   return (
     <BrowserRouter>
+      <StatsProvider>
       <div className="min-h-screen bg-gray-50">
         <Header />
         <main>
@@ -23,6 +25,7 @@ export default function App() {
         </main>
         <BottomNav />
       </div>
+      </StatsProvider>
     </BrowserRouter>
   );
 }
