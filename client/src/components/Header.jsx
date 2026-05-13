@@ -10,7 +10,7 @@ export default function Header() {
 
   if (!stats) return <div className="h-14 bg-blue-600" />;
 
-  const { level, title, total_xp, nextLevelXp, progress, streak_days } = stats;
+  const { level, title, total_xp, currentLevelXp, nextLevelXp, progress, streak_days } = stats;
 
   return (
     <header className="bg-blue-600 text-white px-4 py-3 sticky top-0 z-50 shadow-md">
@@ -32,7 +32,7 @@ export default function Header() {
             />
           </div>
           <span className="text-xs opacity-80 whitespace-nowrap">
-            {total_xp.toLocaleString()} / {nextLevelXp.toLocaleString()} XP
+            {(total_xp - currentLevelXp).toLocaleString()} / {(nextLevelXp - currentLevelXp).toLocaleString()} XP
           </span>
         </div>
       </div>

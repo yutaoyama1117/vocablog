@@ -38,7 +38,7 @@ export function getLevelInfo(totalXp) {
   const titleLevel = titleLevels.find(l => level >= l) ?? 1;
   const title = LEVEL_TITLES[titleLevel];
 
-  return { level, title, currentXp: totalXp, nextLevelXp, progress };
+  return { level, title, currentLevelXp, nextLevelXp, progress };
 }
 
 export function getStats() {
